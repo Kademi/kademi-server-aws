@@ -62,20 +62,19 @@
     <bean id="resource.factory" class="io.milton.http.MultipleResourceFactory">
         <constructor-arg>
             <list>
-               
+
                 <ref local="static.resource.factory" />
-                <ref local="web.resource.factory" />                
+                <ref local="web.resource.factory" />
             </list>
         </constructor-arg>
     </bean>
 
 
-    <bean id="open.session.in.view.filter" class="io.milton.cloud.server.db.utils.MiltonOpenSessionInViewFilter">
+    <bean id="open.session.in.view.filter" class="co.kademi.server.MiltonOpenSessionInViewFilter">
         <constructor-arg ref="session.manager"/>
-        <constructor-arg ref="root.context" />
     </bean>
 
-    <bean id="milton.http.manager" class="io.milton.ent.config.HttpManagerBuilderEnt"> <!-- Note enterprise version. Only available for AGPL + Commercial users of milton -->
+    <bean id="milton.http.manager" class="io.milton.config.HttpManagerBuilder"> <!-- Note enterprise version. Only available for AGPL + Commercial users of milton -->
         <property name="mainResourceFactory" ref="resource.factory" />
         <property name="eventManager" ref="event.manager" />
         <property name="filters">

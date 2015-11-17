@@ -54,7 +54,7 @@
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <constructor-arg ref="hikariConfig" />
         <property name="connectionTimeout" value="5000" />
-        <property name="maximumPoolSize" value="${jdbc.maximumPoolSize}" />        
+        <property name="maximumPoolSize" value="${jdbc.maximumPoolSize}" />
     </bean>
     -->
 
@@ -78,14 +78,8 @@
         <property name="namingStrategy" ref="namingStrategy" />
     </bean>
 
-    <bean id="auditService" class="co.kademi.server.stream.audit.KademiAuditService">
-        <constructor-arg ref="security.manager" />
-        <constructor-arg ref="currentDateService" />
-    </bean>
-
     <bean id="session.manager" class="io.milton.vfs.db.utils.SessionManager">
         <constructor-arg ref="sessionFactory" />
-        <property name="auditService" ref="auditService" />
     </bean>
 
     <bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>

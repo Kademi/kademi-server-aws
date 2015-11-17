@@ -5,6 +5,7 @@
     <packaging>jar</packaging>
     <groupId>kademi</groupId>
     <version>1.0.0</version>
+
     <build>
         <resources>
             <resource>
@@ -78,43 +79,8 @@
         </dependency>
 
         <dependency>
-            <artifactId>milton-ent-utils</artifactId>
             <groupId>io.milton</groupId>
-            <type>jar</type>
-            <version>1.0.7</version>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>io.milton</groupId>
-            <artifactId>milton-client</artifactId>
-            <version>${milton.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>xml-apis</artifactId>
-                    <groupId>xml-apis</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jdom</artifactId>
-                    <groupId>org.jdom</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>je</artifactId>
-                    <groupId>berkeleydb</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>com.esotericsoftware</artifactId>
-                    <groupId>minilog</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>milton-api</artifactId>
-                    <groupId>io.milton</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>io.milton</groupId>
-            <artifactId>milton-server-ent</artifactId>
+            <artifactId>milton-server-ce</artifactId>
             <version>2.7.1.4</version>
             <exclusions>
                 <exclusion>
@@ -580,11 +546,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>kademi-common</artifactId>
-            <version>1.0.1</version>
-        </dependency>
+
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
@@ -670,7 +632,7 @@
             </activation>
             <build>
                 <plugins>
-                    
+
                 </plugins>
             </build>
         </profile>
@@ -708,10 +670,13 @@
                 </plugins>
             </build>
         </profile>
-
-        
-
-        
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>milton-repo</id>
+            <url>http://milton.io/maven</url>
+        </repository>
+    </repositories>
 </project>
 
