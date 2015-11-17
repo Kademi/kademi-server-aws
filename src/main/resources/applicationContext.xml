@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations" >
+            <list>
+                <!-- Default properties, should run out of the box -->
+                <value>classpath:spliffy-default.properties</value>
+
+                <!-- This refers to an optional file which should be outside the WAR (ie in tomcat/shared/classes -->
+                <!-- It contains environment specific configuration, such as database connection information -->
+                <value>classpath:spliffy-env.properties</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="kademi.https" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" value="#{@systemProperties}" />
+        <property name="targetMethod" value="putAll" />
+        <property name="arguments">
+            <props>
+                <prop key="kademi.secure.protocol">TLSv1.2</prop>
+                <prop key="kademi.secure.certificate">${https.admin.certificate}</prop>
+                <prop key="kademi.secure.privatekey">${https.admin.privatekey}</prop>
+                <prop key="kademi.secure.primary_domain">${primary.domain}</prop>
+                <prop key="kademi.secure.force">${https.admin.force}</prop>
+                <prop key="kademi.secure.cdn.certificate">${https.admin.cdn.certificate}</prop>
+                <prop key="kademi.secure.cdn.privatekey">${https.admin.cdn.privatekey}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <import resource="classpath:database.xml"/>
+
+
+    <!-- Another environment specific file. Default empty file is included, but create your own outside the WAR to
+    environment specific bean declarations
+    -->
+    <import resource="classpath:env.xml"/>
+
+
+    <bean id="event.manager" class="io.milton.event.EventManagerImpl"/>
+
+    <bean id="static.resource.factory" class="io.milton.servlet.StaticResourceFactory"/>
+
+    <!-- Find resources from the servlet context, which do not pass through the filter via /static -->
+    <bean id="web.resource.factory" class="io.milton.servlet.WebResourceFactory">
+        <!--
+        <constructor-arg ref="config" />
+        -->
+        <constructor-arg value="${webapp.root}" />
+        <property name="basePath" value="" />
+    </bean>
+
+
+    <bean id="resource.factory" class="io.milton.http.MultipleResourceFactory">
+        <constructor-arg>
+            <list>
+               
+                <ref local="static.resource.factory" />
+                <ref local="web.resource.factory" />                
+            </list>
+        </constructor-arg>
+    </bean>
+
+
+    <bean id="open.session.in.view.filter" class="io.milton.cloud.server.db.utils.MiltonOpenSessionInViewFilter">
+        <constructor-arg ref="session.manager"/>
+        <constructor-arg ref="root.context" />
+    </bean>
+
+    <bean id="milton.http.manager" class="io.milton.ent.config.HttpManagerBuilderEnt"> <!-- Note enterprise version. Only available for AGPL + Commercial users of milton -->
+        <property name="mainResourceFactory" ref="resource.factory" />
+        <property name="eventManager" ref="event.manager" />
+        <property name="filters">
+            <list>
+                <ref local="open.session.in.view.filter" />
+            </list>
+        </property>
+    </bean>
+</beans>
