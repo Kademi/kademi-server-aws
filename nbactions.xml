@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-run-grizzly</actionName>
+            <displayName>run-grizzly</displayName>
+            <goals>
+                <goal>install</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>run-grizzly</activatedProfile>
+            </activatedProfiles>
+        </action>
+    </actions>

@@ -143,6 +143,7 @@ public class Kademi {
             listener.registerAddOn(addon);
         }
 
+        System.out.println("Starting Kademi...");
         httpServer.start();
         Runtime.getRuntime().addShutdownHook(new KademiShutdownHook());
 

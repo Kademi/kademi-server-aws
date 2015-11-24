@@ -78,7 +78,7 @@
         <property name="namingStrategy" ref="namingStrategy" />
     </bean>
 
-    <bean id="session.manager" class="io.milton.vfs.db.utils.SessionManager">
+    <bean id="session.manager" class="co.kademi.server.SessionManager">
         <constructor-arg ref="sessionFactory" />
     </bean>
 
