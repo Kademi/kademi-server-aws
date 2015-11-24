@@ -54,29 +54,7 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>co.kademi</groupId>
-            <artifactId>kademi-vfs</artifactId>
-            <version>1.6.6</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>xml-apis</artifactId>
-                    <groupId>xml-apis</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>milton-api</artifactId>
-                    <groupId>io.milton</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>persistence-api</artifactId>
-                    <groupId>javax.persistence</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.sql</groupId>
-                    <artifactId>jdbc-stdext</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        
 
         <dependency>
             <groupId>io.milton</groupId>
